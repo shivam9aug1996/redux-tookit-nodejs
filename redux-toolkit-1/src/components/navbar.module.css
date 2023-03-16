@@ -1,0 +1,14 @@
+.navLink {
+  margin: 10px;
+}
+
+.navLinkText {
+  margin: 10px;
+  text-decoration: none;
+  color: black;
+  pointer-events: none;
+}
+
+.logoutBtn {
+  margin: 10px;
+}
