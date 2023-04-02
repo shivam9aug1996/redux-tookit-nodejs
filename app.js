@@ -5,16 +5,18 @@ import { User } from "./models/user.js";
 import jwt from "jsonwebtoken";
 import { Todo } from "./models/todo.js";
 import key from "./config/keys.js";
-import path from "path";
-import { fileURLToPath } from "url";
-
+// import path from "path";
+// import { fileURLToPath } from "url";
+import dotenv from "dotenv";
+dotenv.config();
+const port = process.env.PORT || 5002;
 const app = express();
-const PORT = process.env.PORT || 5002;
-const JWT_SECRET = key.JWT_SECRET;
+const PORT = port;
+const JWT_SECRET = "secretkey";
 const db = async () => {
   try {
     mongoose.set("strictQuery", false);
-    await mongoose.connect(key.MONGO_URI);
+    await mongoose.connect(process.env.MONGO_URI);
     console.log("db Connected");
   } catch (error) {
     console.log("db not able to connect", JSON.stringify(error));
@@ -132,21 +134,21 @@ app.post("/signin", async (req, res) => {
   }
 });
 
-if (process.env.NODE_ENV == "production") {
-  // console.log("hi");
-  //const path = require("path");
-  // app.get("/", (req, res) => {
-  //   const __filename = fileURLToPath(import.meta.url);
+// if (process.env.NODE_ENV == "production") {
+//   // console.log("hi");
+//   //const path = require("path");
+//   // app.get("/", (req, res) => {
+//   //   const __filename = fileURLToPath(import.meta.url);
 
-  //   const __dirname = path.dirname(__filename);
-  //   console.log("765rfghjhgfdfghj", __dirname);
-  //   app.use(express.static(path.join(__dirname, "redux-toolkit-1", "build")));
-  //   res.sendFile(
-  //     path.join(__dirname, "redux-toolkit-1", "build", "index.html")
-  //   );
-  // });
-  app.use(express.static("redux-toolkit-1/build"));
-}
+//   //   const __dirname = path.dirname(__filename);
+//   //   console.log("765rfghjhgfdfghj", __dirname);
+//   //   app.use(express.static(path.join(__dirname, "redux-toolkit-1", "build")));
+//   //   res.sendFile(
+//   //     path.join(__dirname, "redux-toolkit-1", "build", "index.html")
+//   //   );
+//   // });
+//   app.use(express.static("redux-toolkit-1/build"));
+// }
 
 app.listen(PORT, () => {
   console.log("server started", PORT);
