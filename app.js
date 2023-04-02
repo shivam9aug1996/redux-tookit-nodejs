@@ -5,8 +5,8 @@ import { User } from "./models/user.js";
 import jwt from "jsonwebtoken";
 import { Todo } from "./models/todo.js";
 import key from "./config/keys.js";
-import path from "path";
-const __dirname = path.resolve();
+import * as path from "path";
+
 const app = express();
 const PORT = 5002;
 const JWT_SECRET = key.JWT_SECRET;
@@ -72,6 +72,7 @@ app.delete("/remove/:id", requireLogin, async (req, res) => {
 });
 
 app.get("/logout", requireLogin, async (req, res) => {
+  console.log("logout");
   res.clearCookie("jwt");
   res.status(200).json({ message: "successfully logout" });
 });
@@ -131,7 +132,8 @@ app.post("/signin", async (req, res) => {
 });
 
 if (process.env.NODE_ENV == "production") {
-  const path = require("path");
+  // console.log("hi");
+  //const path = require("path");
   app.get("/", (req, res) => {
     app.use(
       express.static(path.resolve(__dirname, "redux-toolkit-1", "build"))
