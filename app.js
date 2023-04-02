@@ -5,7 +5,8 @@ import { User } from "./models/user.js";
 import jwt from "jsonwebtoken";
 import { Todo } from "./models/todo.js";
 import key from "./config/keys.js";
-import * as path from "path";
+import path from "path";
+import { fileURLToPath } from "url";
 
 const app = express();
 const PORT = 5002;
@@ -135,11 +136,12 @@ if (process.env.NODE_ENV == "production") {
   // console.log("hi");
   //const path = require("path");
   app.get("/", (req, res) => {
-    app.use(
-      express.static(path.resolve(__dirname, "redux-toolkit-1", "build"))
-    );
+    const __filename = fileURLToPath(import.meta.url);
+
+    const __dirname = path.dirname(__filename);
+    app.use(express.static(path.join(__dirname, "redux-toolkit-1", "build")));
     res.sendFile(
-      path.resolve(__dirname, "redux-toolkit-1", "build", "index.html")
+      path.join(__dirname, "redux-toolkit-1", "build", "index.html")
     );
   });
 }
