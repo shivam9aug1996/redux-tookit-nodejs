@@ -139,6 +139,7 @@ if (process.env.NODE_ENV == "production") {
     const __filename = fileURLToPath(import.meta.url);
 
     const __dirname = path.dirname(__filename);
+    console.log("765rfghjhgfdfghj", __dirname);
     app.use(express.static(path.join(__dirname, "redux-toolkit-1", "build")));
     res.sendFile(
       path.join(__dirname, "redux-toolkit-1", "build", "index.html")
