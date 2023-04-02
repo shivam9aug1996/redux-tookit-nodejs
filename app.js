@@ -9,7 +9,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 
 const app = express();
-const PORT = 5002;
+const PORT = process.env.PORT || 5002;
 const JWT_SECRET = key.JWT_SECRET;
 const db = async () => {
   try {
@@ -135,16 +135,17 @@ app.post("/signin", async (req, res) => {
 if (process.env.NODE_ENV == "production") {
   // console.log("hi");
   //const path = require("path");
-  app.get("/", (req, res) => {
-    const __filename = fileURLToPath(import.meta.url);
+  // app.get("/", (req, res) => {
+  //   const __filename = fileURLToPath(import.meta.url);
 
-    const __dirname = path.dirname(__filename);
-    console.log("765rfghjhgfdfghj", __dirname);
-    app.use(express.static(path.join(__dirname, "redux-toolkit-1", "build")));
-    res.sendFile(
-      path.join(__dirname, "redux-toolkit-1", "build", "index.html")
-    );
-  });
+  //   const __dirname = path.dirname(__filename);
+  //   console.log("765rfghjhgfdfghj", __dirname);
+  //   app.use(express.static(path.join(__dirname, "redux-toolkit-1", "build")));
+  //   res.sendFile(
+  //     path.join(__dirname, "redux-toolkit-1", "build", "index.html")
+  //   );
+  // });
+  app.use(express.static("redux-toolkit-1/build"));
 }
 
 app.listen(PORT, () => {
