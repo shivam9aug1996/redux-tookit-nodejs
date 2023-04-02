@@ -5,9 +5,10 @@ import { User } from "./models/user.js";
 import jwt from "jsonwebtoken";
 import { Todo } from "./models/todo.js";
 import key from "./config/keys.js";
-// import path from "path";
-// import { fileURLToPath } from "url";
+import path from "path";
+import { fileURLToPath } from "url";
 import dotenv from "dotenv";
+
 dotenv.config();
 const port = process.env.PORT || 5002;
 const app = express();
@@ -24,6 +25,11 @@ const db = async () => {
 };
 db();
 app.use(express.json());
+const __filename = fileURLToPath(import.meta.url);
+
+const __dirname = path.dirname(__filename);
+
+app.use(express.static(path.join(__dirname, "./redux-toolkit-1/build")));
 
 const requireLogin = (req, res, next) => {
   const { authorization } = req.headers;
@@ -41,6 +47,10 @@ const requireLogin = (req, res, next) => {
     return res.status(401).json({ error: "you must be logged in" });
   }
 };
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "./client/build/index.html"));
+});
 
 app.post("/createtodo", requireLogin, async (req, res) => {
   const { todo } = req.body;
