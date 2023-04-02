@@ -5,7 +5,8 @@ import { User } from "./models/user.js";
 import jwt from "jsonwebtoken";
 import { Todo } from "./models/todo.js";
 import key from "./config/keys.js";
-
+import path from "path";
+const __dirname = path.resolve();
 const app = express();
 const PORT = 5002;
 const JWT_SECRET = key.JWT_SECRET;
