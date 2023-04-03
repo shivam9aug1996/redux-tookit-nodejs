@@ -48,7 +48,7 @@ const requireLogin = (req, res, next) => {
   }
 };
 
-app.post("/api/v1/createtodo", requireLogin, async (req, res) => {
+app.post("/createtodo", requireLogin, async (req, res) => {
   const { todo } = req.body;
 
   try {
@@ -66,7 +66,7 @@ app.post("/api/v1/createtodo", requireLogin, async (req, res) => {
   }
 });
 
-app.get("/api/v1/gettodo", requireLogin, async (req, res) => {
+app.get("/gettodo", requireLogin, async (req, res) => {
   const data = await Todo.find({
     todoBy: req.user,
   });
@@ -74,19 +74,19 @@ app.get("/api/v1/gettodo", requireLogin, async (req, res) => {
   res.status(200).json({ message: data });
 });
 
-app.delete("/api/v1/remove/:id", requireLogin, async (req, res) => {
+app.delete("/remove/:id", requireLogin, async (req, res) => {
   const removedTodo = await Todo.findOneAndRemove({ _id: req.params.id });
 
   res.status(200).json({ message: removedTodo });
 });
 
-app.get("/api/v1/logout", requireLogin, async (req, res) => {
+app.get("/logout", requireLogin, async (req, res) => {
   console.log("logout");
   res.clearCookie("jwt");
   res.status(200).json({ message: "successfully logout" });
 });
 
-app.post("/api/v1/signup", async (req, res) => {
+app.post("/signup", async (req, res) => {
   const { email, password } = req.body;
   try {
     if (!email || !password) {
@@ -112,7 +112,7 @@ app.post("/api/v1/signup", async (req, res) => {
   }
 });
 
-app.post("/api/v1/signin", async (req, res) => {
+app.post("/signin", async (req, res) => {
   const { email, password } = req.body;
   try {
     if (!email || !password) {
